@@ -1,0 +1,32 @@
+We use mongoose to interact with mongodb. 
+1.First, Download mongoose ==> npm i mongoose
+2.Import Mongoose in your all files where you work with database ==> const mongoose = require("mongoose");
+3. Make connection with mongodb. Go mongodb Atlas> make clusters > tap connect > copy link from drivers and pasts into .env file
+4. put below code into config.js
+
+//config.js
+const mongoose = require("mongoose")
+const connectDatabase = async () => {
+    try {
+        await mongoose.connect(`mongodb+srv://${proess.env.Your_Db_Username}:${process.env.your_database_pass}@practiceprojects.hzsoqux.mongodb.net/Your_Database_Name`);
+        console.log('Database is connected successfully');
+    } catch (err) {
+        console.log('Database fails to connect!');
+    }
+};
+
+module.exports = connectDatabase ;
+
+// index.js
+
+const connectDatabase = require("connectDatabase");
+const mongoose = require('mongoose');
+const express = require('express');
+
+express.listen(PORT, async () => {
+    console.log(`Application is running at: http://localhost:${PORT}/`);
+    await connectDatabase();
+})
+
+// Remind : connecting mongoDb is a time consuming function. so use async/await with it. Most reminder, database username && password must placed in a .env file, otherwise, it will not be secured
+
